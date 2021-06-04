@@ -4,11 +4,6 @@ import GoalInput from './components/goals/GoalInput';
 import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
 
-const backendUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost'
-    : 'http://ecs-lb-783189166.us-east-2.elb.amazonaws.com';
-
 function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +14,7 @@ function App() {
       setIsLoading(true);
 
       try {
-        const response = await fetch(backendUrl + '/goals');
+        const response = await fetch('http://192.168.114.157:30854/goals');
 
         const resData = await response.json();
 
@@ -44,14 +39,14 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(backendUrl + '/goals', {
+      const response = await fetch('http://192.168.114.157:30854/goals', {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
         }),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
 
       const resData = await response.json();
@@ -83,7 +78,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(backendUrl + '/goals/' + goalId, {
+      const response = await fetch('http://192.168.114.157:30854/goals/' + goalId, {
         method: 'DELETE',
       });
 
